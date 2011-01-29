@@ -1,0 +1,37 @@
+<html>
+<head><title>Content remover Extension Options</title></head>
+<script type="text/javascript">
+
+var fields = ["body_selector", "content_selector", "content_matcher"];
+console.log(localStorage);
+// Saves options to localStorage.
+function save_options() {
+  for(var i=0; i < fields.length; ++i){
+    localStorage[fields[i]] = document.getElementById(fields[i]).value;
+  }
+  // Update status to let user know options were saved.
+  var status = document.getElementById("status");
+  status.innerHTML = "Options Saved.";
+  setTimeout(function() {
+    status.innerHTML = "";
+  }, 750);
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+  for(var i=0; i < fields.length; ++i){
+    var value = localStorage[fields[i]];
+    if(!!value)
+      document.getElementById(fields[i]).value = value;
+  }
+}
+
+</script>
+
+<body onload="restore_options()">
+<p>Body element selector: <input type="text" id="body_selector"/></p>
+<p>Content elements selector: <input type="text" id="content_selector"/></p>
+<p>Bad content text matcher (regex): <input type="text" id="content_matcher" size="100"/></p>
+<p><button onclick="save_options()">Save</button><br/><span id="status"></span></p>
+</body>
+</html>
